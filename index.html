@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit Converter</title>
+  <style>
+    :root {
+      --bg: #e9f0ff;
+      --card: #ffffff;
+      --text: #1f2937;
+      --accent: #3b82f6;
+      --accent-dark: #1d4ed8;
+      --shadow: 0 20px 50px rgba(30, 58, 138, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, #f0f9ff 0%, var(--bg) 45%, #dbeafe 100%);
+    }
+
+    .container {
+      width: min(98vw, 440px);
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      border: 1px solid #dbeafe;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      text-align: center;
+      font-size: 1.6rem;
+      color: #1e3a8a;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      padding: 14px;
+      background: #f8fbff;
+      border-radius: 12px;
+      border: 1px solid #dfefff;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      color: #1e40af;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 9px;
+      border: 1px solid #bfdbfe;
+      font-size: 0.95rem;
+    }
+
+    input:focus, select:focus, button:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(59,132,246,0.15);
+    }
+
+    button {
+      margin-top: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+    }
+
+    .result {
+      margin-top: 10px;
+      min-height: 34px;
+      padding: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 9px;
+      font-weight: 600;
+      color: #1e40af;
+    }
+
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.86rem;
+      color: #475569;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Unit Converter</h1>
+
+    <section class="section" id="tempSection">
+      <h2>Celsius ↔ Fahrenheit</h2>
+      <label for="celsiusInput">Temperature (Celsius)</label>
+      <input type="number" step="any" id="celsiusInput" placeholder="Enter Celsius" />
+      <button id="convertTempBtn">Convert to Fahrenheit</button>
+      <div class="result" id="tempResult" aria-live="polite"></div>
+    </section>
+
+    <section class="section" id="weightSection">
+      <h2>Kilograms ↔ Pounds</h2>
+      <label for="kgInput">Weight (Kilograms)</label>
+      <input type="number" step="any" id="kgInput" placeholder="Enter Kilograms" />
+      <button id="convertWeightBtn">Convert to Pounds</button>
+      <div class="result" id="weightResult" aria-live="polite"></div>
+    </section>
+
+    <div class="footer">mare</div>
+  </main>
+
+  <script>
+    const celsiusInput = document.getElementById('celsiusInput');
+    const tempResult = document.getElementById('tempResult');
+    const convertTempBtn = document.getElementById('convertTempBtn');
+
+    const kgInput = document.getElementById('kgInput');
+    const weightResult = document.getElementById('weightResult');
+    const convertWeightBtn = document.getElementById('convertWeightBtn');
+
+    function formatNumber(value) {
+      return Number.parseFloat(value).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    convertTempBtn.addEventListener('click', () => {
+      const celsius = Number(celsiusInput.value);
+      if (Number.isNaN(celsius)) {
+        tempResult.textContent = 'Please enter a valid Celsius value.';
+        tempResult.style.color = '#b91c1c';
+        return;
+      }
+      const fahr = (celsius * 9 / 5) + 32;
+      tempResult.style.color = '#1e40af';
+      tempResult.textContent = `${formatNumber(celsius)} °C = ${formatNumber(fahr)} °F`;
+    });
+
+    convertWeightBtn.addEventListener('click', () => {
+      const kg = Number(kgInput.value);
+      if (Number.isNaN(kg)) {
+        weightResult.textContent = 'Please enter a valid kilogram value.';
+        weightResult.style.color = '#b91c1c';
+        return;
+      }
+      const pounds = kg * 2.20462;
+      weightResult.style.color = '#1e40af';
+      weightResult.textContent = `${formatNumber(kg)} kg = ${formatNumber(pounds)} lb`;
+    });
+  </script>
+</body>
+</html>
